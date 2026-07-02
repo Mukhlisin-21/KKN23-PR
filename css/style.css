@@ -1,1089 +1,725 @@
 /* ===================================================
    SMART TOGA
-   Program Kerja KKN
-   Universitas Riau
+   Program Kerja KKN — Universitas Riau
+   (versi rapi & dioptimalkan)
 =================================================== */
+
+/* ==========================
+   VARIABEL WARNA & GLOBAL
+========================== */
+:root{
+  --hijau-tua:    #1b5e20;
+  --hijau:        #2e7d32;
+  --hijau-muda:   #edf7ee;
+  --hijau-pucat:  #e8f5e9;
+  --kuning:       #ffc107;
+  --kuning-tua:   #ffb300;
+  --kuning-aksen: #ffd54f;
+  --oranye:       #ff9800;
+  --oranye-tua:   #e65100;
+  --teks:         #333;
+  --teks-muted:   #666;
+  --putih:        #fff;
+  --bg:           #f4f8f3;
+
+  --radius-sm: 10px;
+  --radius-md: 15px;
+  --radius-lg: 18px;
+  --radius-xl: 20px;
+  --radius-pill: 50px;
+
+  --shadow-sm: 0 5px 15px rgba(0,0,0,.08);
+  --shadow-md: 0 8px 20px rgba(0,0,0,.08);
+  --shadow-lg: 0 15px 30px rgba(0,0,0,.18);
+
+  --transition: .3s ease;
+}
 
 /* ==========================
    RESET
 ========================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+*,
+*::before,
+*::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html{
-
-    scroll-behavior:smooth;
-
+  scroll-behavior: smooth;
 }
 
 body{
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--teks);
+  line-height: 1.6;
+}
 
-    font-family:'Poppins',sans-serif;
+img{
+  max-width: 100%;
+  display: block;
+}
 
-    background:#f4f8f3;
+a{
+  color: inherit;
+}
 
-    color:#333;
-
-    line-height:1.6;
-
+/* aksesibilitas: outline fokus yang jelas untuk navigasi keyboard */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible{
+  outline: 3px solid var(--kuning-aksen);
+  outline-offset: 2px;
 }
 
 /* ==========================
    CONTAINER
 ========================== */
-
 .container{
-
-    width:90%;
-
-    max-width:1200px;
-
-    margin:auto;
-
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
 }
 
 /* ==========================
    NAVBAR
 ========================== */
-
 nav{
-
-    width:100%;
-
-    height:75px;
-
-    background:#2e7d32;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:0 60px;
-
-    position:sticky;
-
-    top:0;
-
-    z-index:999;
-
-    transition:.3s;
-
-    box-shadow:0 3px 15px rgba(0,0,0,.1);
-
+  width: 100%;
+  height: 75px;
+  background: var(--hijau);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 60px;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  transition: background var(--transition), box-shadow var(--transition);
+  box-shadow: 0 3px 15px rgba(0,0,0,.1);
 }
 
 .logo{
-
-    color:white;
-
-    font-size:28px;
-
-    font-weight:bold;
-
+  color: var(--putih);
+  font-size: 28px;
+  font-weight: bold;
 }
 
 nav ul{
-
-    display:flex;
-
-    list-style:none;
-
-}
-
-nav ul li{
-
-    margin-left:25px;
-
+  display: flex;
+  list-style: none;
+  gap: 25px;
 }
 
 nav ul li a{
-
-    color:white;
-
-    text-decoration:none;
-
-    font-weight:500;
-
-    transition:.3s;
-
+  color: var(--putih);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color var(--transition);
 }
 
-nav ul li a:hover{
-
-    color:#ffd54f;
-
+nav ul li a:hover,
+nav ul li a:focus-visible{
+  color: var(--kuning-aksen);
 }
 
-/* efek saat scroll */
-
+/* efek saat scroll (ditambah lewat JS) */
 .nav-scroll{
-
-    background:#1b5e20;
-
+  background: var(--hijau-tua);
 }
 
 /* ==========================
    HERO
 ========================== */
-
 .hero{
-
-    width:100%;
-
-    min-height:90vh;
-
-    background:linear-gradient(
-
-        rgba(34,139,34,.7),
-
-        rgba(34,139,34,.7)
-
-    ),
-
-    url("../images/hero.jpg");
-
-    background-size:cover;
-
-    background-position:center;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    text-align:center;
-
-    color:white;
-
-    padding:40px;
-
+  width: 100%;
+  min-height: 90vh;
+  background:
+    linear-gradient(rgba(34,139,34,.7), rgba(34,139,34,.7)),
+    url("../images/jahe.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: var(--putih);
+  padding: 10px;
 }
 
 .hero-text{
-
-    max-width:800px;
-
+  max-width: 800px;
 }
 
 .hero h1{
-
-    font-size:58px;
-
-    margin-bottom:20px;
-
+  font-size: 58px;
+  margin-bottom: 20px;
 }
 
 .hero p{
-
-    font-size:20px;
-
-    margin-bottom:35px;
-
+  font-size: 20px;
+  margin-bottom: 35px;
 }
 
 /* ==========================
    BUTTON
 ========================== */
-
 .btn{
-
-    display:inline-block;
-
-    padding:14px 35px;
-
-    background:#ffc107;
-
-    color:#222;
-
-    text-decoration:none;
-
-    border-radius:50px;
-
-    font-weight:bold;
-
-    transition:.3s;
-
+  display: inline-block;
+  padding: 14px 35px;
+  background: var(--kuning);
+  color: #222;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
 }
 
-.btn:hover{
-
-    background:#ffb300;
-
-    transform:translateY(-3px);
-
+.btn:hover,
+.btn:focus-visible{
+  background: var(--kuning-tua);
+  transform: translateY(-3px);
 }
 
 /* ==========================
    TENTANG
 ========================== */
-
 .tentang{
-
-    padding:80px 0;
-
-    text-align:center;
-
+  padding: 80px 0;
+  text-align: center;
 }
 
 .tentang h2{
-
-    color:#2e7d32;
-
-    font-size:36px;
-
-    margin-bottom:25px;
-
+  color: var(--hijau);
+  font-size: 36px;
+  margin-bottom: 25px;
 }
 
 .tentang p{
-
-    max-width:900px;
-
-    margin:auto;
-
-    font-size:18px;
-
-    line-height:32px;
-
+  max-width: 900px;
+  margin: auto;
+  font-size: 18px;
+  line-height: 32px;
 }
 
 /* ==========================
    SEARCH
 ========================== */
-
 .search-box{
-
-    padding:30px;
-
-    display:flex;
-
-    justify-content:center;
-
+  padding: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 #searchInput{
-
-    width:500px;
-
-    max-width:90%;
-
-    padding:15px;
-
-    border-radius:40px;
-
-    border:2px solid #2e7d32;
-
-    font-size:16px;
-
-    outline:none;
-
+  width: 500px;
+  max-width: 90%;
+  padding: 15px 20px;
+  border-radius: 40px;
+  border: 2px solid var(--hijau);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color var(--transition);
 }
 
 #searchInput:focus{
-
-    border-color:#1b5e20;
-
+  border-color: var(--hijau-tua);
 }
 
 /* ==========================
    SECTION TITLE
 ========================== */
-
 section h2{
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--hijau);
+  font-size: 36px;
+}
 
-    text-align:center;
-
-    margin-bottom:40px;
-
-    color:#2e7d32;
-
-    font-size:36px;
-
-}/* ===================================================
+/* ===================================================
    DAFTAR TANAMAN
 =================================================== */
-
 #tanaman{
-
-    padding:80px 0;
-
+  padding: 80px 0;
 }
 
 .cards{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-
-    gap:30px;
-
-    margin-top:30px;
-
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
 }
 
 /* ==========================
    CARD TANAMAN
 ========================== */
-
 .card{
-
-    background:#ffffff;
-
-    border-radius:18px;
-
-    overflow:hidden;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-
-    transition:0.4s;
-
-    opacity:0;
-
-    transform:translateY(40px);
-
+  background: var(--putih);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  transition: transform .4s ease, box-shadow .4s ease, opacity .4s ease;
+  opacity: 0;
+  transform: translateY(40px);
 }
 
 .card.show{
-
-    opacity:1;
-
-    transform:translateY(0);
-
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .card:hover{
-
-    transform:translateY(-10px);
-
-    box-shadow:0 15px 30px rgba(0,0,0,.18);
-
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-lg);
 }
 
 .card img{
-
-    width:100%;
-
-    height:220px;
-
-    object-fit:cover;
-
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
 }
 
 .card h3{
-
-    color:#2e7d32;
-
-    padding:20px 20px 10px;
-
-    font-size:25px;
-
+  color: var(--hijau);
+  padding: 20px 20px 10px;
+  font-size: 25px;
 }
 
 .card p{
-
-    padding:0 20px;
-
-    color:#666;
-
-    min-height:80px;
-
-    font-size:15px;
-
-    line-height:28px;
-
+  padding: 0 20px;
+  color: var(--teks-muted);
+  min-height: 80px;
+  font-size: 15px;
+  line-height: 28px;
+  flex-grow: 1;
 }
 
 .card a{
-
-    display:inline-block;
-
-    margin:20px;
-
-    padding:12px 25px;
-
-    background:#2e7d32;
-
-    color:#fff;
-
-    text-decoration:none;
-
-    border-radius:30px;
-
-    transition:.3s;
-
+  display: inline-block;
+  margin: 20px;
+  padding: 12px 25px;
+  background: var(--hijau);
+  color: var(--putih);
+  text-decoration: none;
+  border-radius: 30px;
+  align-self: flex-start;
+  transition: background var(--transition);
 }
 
-.card a:hover{
-
-    background:#1b5e20;
-
+.card a:hover,
+.card a:focus-visible{
+  background: var(--hijau-tua);
 }
 
 /* ==========================
    FITUR
 ========================== */
-
 .fitur{
-
-    padding:90px 0;
-
-    background:#edf7ee;
-
+  padding: 90px 0;
+  background: var(--hijau-muda);
 }
 
 .fitur-box{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-
-    gap:30px;
-
-    margin-top:50px;
-
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
 }
 
 .fitur-box div{
-
-    background:white;
-
-    border-radius:15px;
-
-    padding:35px;
-
-    text-align:center;
-
-    transition:.4s;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
-
+  background: var(--putih);
+  border-radius: var(--radius-md);
+  padding: 35px;
+  text-align: center;
+  transition: transform .4s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .fitur-box div:hover{
-
-    transform:translateY(-8px);
-
+  transform: translateY(-8px);
 }
 
 .fitur-box i{
-
-    font-size:55px;
-
-    color:#2e7d32;
-
-    margin-bottom:20px;
-
+  font-size: 55px;
+  color: var(--hijau);
+  margin-bottom: 20px;
 }
 
 .fitur-box h3{
-
-    margin-bottom:15px;
-
-    color:#2e7d32;
-
+  margin-bottom: 15px;
+  color: var(--hijau);
 }
 
 .fitur-box p{
-
-    color:#666;
-
-    line-height:28px;
-
+  color: var(--teks-muted);
+  line-height: 28px;
 }
 
 /* ==========================
    FOOTER
 ========================== */
-
 footer{
-
-    background:#1b5e20;
-
-    color:white;
-
-    text-align:center;
-
-    padding:40px 20px;
-
-    margin-top:70px;
-
+  background: var(--hijau-tua);
+  color: var(--putih);
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 15px;
 }
 
 footer h3{
-
-    font-size:28px;
-
-    margin-bottom:10px;
-
+  font-size: 28px;
+  margin-bottom: 10px;
 }
 
 footer p{
-
-    margin-top:8px;
-
-    color:#ddd;
-
+  margin-top: 8px;
+  color: #ddd;
 }
 
 /* ==========================
    ANIMASI
 ========================== */
-
 .fade-up{
-
-    animation:fadeUp 1s ease;
-
+  animation: fadeUp 1s ease;
 }
 
 @keyframes fadeUp{
+  from{ opacity: 0; transform: translateY(30px); }
+  to{ opacity: 1; transform: translateY(0); }
+}
 
-    from{
+@keyframes fadeIn{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
 
-        opacity:0;
+.loaded{
+  animation: fadeIn .7s ease;
+}
 
-        transform:translateY(30px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+/* hormati preferensi pengguna yang mengurangi gerakan */
+@media (prefers-reduced-motion: reduce){
+  *{
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ==========================
    BACK TO TOP
 ========================== */
-
 #backToTop{
-
-    position:fixed;
-
-    bottom:25px;
-
-    right:25px;
-
-    width:55px;
-
-    height:55px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:#2e7d32;
-
-    color:white;
-
-    font-size:22px;
-
-    cursor:pointer;
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.25);
-
-    transition:.3s;
-
-    z-index:999;
-
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  border: none;
+  border-radius: 50%;
+  background: var(--hijau);
+  color: var(--putih);
+  font-size: 22px;
+  cursor: pointer;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,.25);
+  transition: background var(--transition), transform var(--transition);
+  z-index: 999;
 }
 
-#backToTop:hover{
-
-    background:#145a1d;
-
-    transform:scale(1.1);
-
+#backToTop:hover,
+#backToTop:focus-visible{
+  background: #145a1d;
+  transform: scale(1.1);
 }
 
 /* ==========================
    SCROLLBAR
 ========================== */
-
 ::-webkit-scrollbar{
-
-    width:10px;
-
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track{
-
-    background:#eeeeee;
-
+  background: #eee;
 }
 
 ::-webkit-scrollbar-thumb{
-
-    background:#2e7d32;
-
-    border-radius:10px;
-
+  background: var(--hijau);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover{
+  background: var(--hijau-tua);
+}
 
-    background:#1b5e20;
-
-}/* ===================================================
+/* ===================================================
    HALAMAN DETAIL TANAMAN
 =================================================== */
-
 .detail-header{
-
-    padding:80px 0;
-
-    background:#f8fff8;
-
+  padding: 80px 0;
+  background: #f8fff8;
 }
 
 .detail-grid{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:50px;
-
-    align-items:center;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
 }
 
 .detail-grid img{
-
-    width:100%;
-
-    border-radius:20px;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.15);
-
+  width: 100%;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 25px rgba(0,0,0,.15);
 }
 
 .detail-grid h1{
-
-    font-size:48px;
-
-    color:#2e7d32;
-
-    margin-bottom:15px;
-
+  font-size: 48px;
+  color: var(--hijau);
+  margin-bottom: 15px;
 }
 
 .latin{
-
-    color:#666;
-
-    margin-bottom:20px;
-
-    font-size:18px;
-
+  color: var(--teks-muted);
+  font-style: italic;
+  margin-bottom: 20px;
+  font-size: 18px;
 }
 
 .detail-grid p{
-
-    line-height:32px;
-
-    font-size:18px;
-
+  line-height: 32px;
+  font-size: 18px;
 }
 
 /* ==========================
    CONTENT
 ========================== */
-
 .content{
-
-    padding:60px 0;
-
+  padding: 10px 0;
 }
 
 .content h2{
-
-    color:#2e7d32;
-
-    margin-bottom:25px;
-
-    border-left:6px solid #2e7d32;
-
-    padding-left:15px;
-
+  color: var(--hijau);
+  margin-bottom: 25px;
+  border-left: 6px solid var(--hijau);
+  padding-left: 15px;
 }
 
-.content ul{
-
-    padding-left:25px;
-
+.content ul,
+.content ol{
+  padding-left: 25px;
 }
 
 .content li{
-
-    margin-bottom:12px;
-
-    line-height:30px;
-
-    font-size:17px;
-
-}
-
-.content ol{
-
-    padding-left:25px;
-
-}
-
-.content ol li{
-
-    margin-bottom:12px;
-
+  margin-bottom: 12px;
+  line-height: 30px;
+  font-size: 17px;
 }
 
 /* ==========================
-   BOX
+   BOX KONTEN
 ========================== */
-
 .content .container{
-
-    background:#fff;
-
-    padding:35px;
-
-    border-radius:18px;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-
+  background: var(--putih);
+  padding: 35px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 /* ==========================
    QR CODE
 ========================== */
-
 #qrcode{
-
-    margin-top:25px;
-
-    display:flex;
-
-    justify-content:center;
-
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
 }
 
 /* ==========================
-   CENTER
+   UTILITAS
 ========================== */
-
 .center{
-
-    text-align:center;
-
+  text-align: center;
 }
-
-/* ==========================
-   TOMBOL KEMBALI
-========================== */
 
 .center .btn{
-
-    margin-top:20px;
-
+  margin-top: 20px;
 }
 
 /* ==========================
    GALERI
 ========================== */
-
 .gallery{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-
-    gap:20px;
-
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
 }
 
 .gallery img{
-
-    width:100%;
-
-    height:200px;
-
-    object-fit:cover;
-
-    border-radius:15px;
-
-    transition:.3s;
-
-    cursor:pointer;
-
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform var(--transition);
 }
 
 .gallery img:hover{
-
-    transform:scale(1.05);
-
+  transform: scale(1.05);
 }
 
 /* ==========================
    INFO BOX
 ========================== */
-
 .info-box{
-
-    background:#e8f5e9;
-
-    border-left:6px solid #2e7d32;
-
-    padding:20px;
-
-    border-radius:10px;
-
-    margin-top:20px;
-
+  background: var(--hijau-pucat);
+  border-left: 6px solid var(--hijau);
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  margin-top: 20px;
 }
 
 /* ==========================
    WARNING BOX
 ========================== */
-
 .warning{
-
-    background:#fff8e1;
-
-    border-left:6px solid #ff9800;
-
-    padding:20px;
-
-    border-radius:10px;
-
-    margin-top:20px;
-
+  background: #fff8e1;
+  border-left: 6px solid var(--oranye);
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  margin-top: 20px;
 }
 
 .warning h3{
-
-    color:#e65100;
-
-    margin-bottom:10px;
-
+  color: var(--oranye-tua);
+  margin-bottom: 10px;
 }
 
 /* ==========================
    REFERENSI
 ========================== */
-
 .reference{
-
-    background:#f5f5f5;
-
-    padding:20px;
-
-    border-radius:10px;
-
+  background: #f5f5f5;
+  padding: 20px;
+  border-radius: var(--radius-sm);
 }
 
 .reference ul{
-
-    padding-left:20px;
-
+  padding-left: 20px;
 }
 
 .reference li{
-
-    margin-bottom:10px;
-
+  margin-bottom: 10px;
 }
 
-/* ==========================
-   LOADING
-========================== */
+/* ===================================================
+   RESPONSIVE — TABLET
+=================================================== */
+@media (max-width: 992px){
+  .detail-grid{
+    grid-template-columns: 1fr;
+  }
 
-.loaded{
-
-    animation:fadeIn .7s;
-
+  .detail-grid h1{
+    font-size: 38px;
+  }
 }
 
-@keyframes fadeIn{
+/* ===================================================
+   RESPONSIVE — HP
+=================================================== */
+@media (max-width: 768px){
+  nav{
+    padding: 20px;
+    flex-direction: column;
+    height: auto;
+  }
 
-    from{
+  nav ul{
+    margin-top: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+  }
 
-        opacity:0;
+  nav ul li{
+    margin: 8px;
+  }
 
-    }
+  .hero{
+    min-height: 70vh;
+    padding: 30px;
+  }
 
-    to{
+  .hero h1{
+    font-size: 34px;
+  }
 
-        opacity:1;
+  .hero p{
+    font-size: 16px;
+  }
 
-    }
+  .tentang h2{
+    font-size: 30px;
+  }
 
+  .cards{
+    grid-template-columns: 1fr;
+  }
+
+  .card img{
+    height: 200px;
+  }
+
+  .detail-grid h1{
+    font-size: 30px;
+  }
+
+  .detail-grid p{
+    font-size: 16px;
+  }
+
+  .content .container{
+    padding: 20px;
+  }
+
+  footer{
+    padding: 30px 15px;
+  }
 }
 
-/* ==========================
-   RESPONSIVE TABLET
-========================== */
-
-@media(max-width:992px){
-
-.detail-grid{
-
-grid-template-columns:1fr;
-
-}
-
-.detail-grid h1{
-
-font-size:38px;
-
-}
-
-}
-
-/* ==========================
-   RESPONSIVE HP
-========================== */
-
-@media(max-width:768px){
-
-nav{
-
-padding:20px;
-
-flex-direction:column;
-
-height:auto;
-
-}
-
-nav ul{
-
-margin-top:15px;
-
-flex-wrap:wrap;
-
-justify-content:center;
-
-}
-
-nav ul li{
-
-margin:8px;
-
-}
-
-.hero{
-
-min-height:70vh;
-
-padding:30px;
-
-}
-
-.hero h1{
-
-font-size:34px;
-
-}
-
-.hero p{
-
-font-size:16px;
-
-}
-
-.tentang h2{
-
-font-size:30px;
-
-}
-
-.cards{
-
-grid-template-columns:1fr;
-
-}
-
-.card img{
-
-height:200px;
-
-}
-
-.detail-grid h1{
-
-font-size:30px;
-
-}
-
-.detail-grid p{
-
-font-size:16px;
-
-}
-
-.content .container{
-
-padding:20px;
-
-}
-
-footer{
-
-padding:30px 15px;
-
-}
-
-}
-
-/* ==========================
-   RESPONSIVE HP KECIL
-========================== */
-
-@media(max-width:480px){
-
-.logo{
-
-font-size:22px;
-
-}
-
-.hero h1{
-
-font-size:28px;
-
-}
-
-.hero p{
-
-font-size:15px;
-
-}
-
-.btn{
-
-padding:12px 25px;
-
-}
-
-.content h2{
-
-font-size:24px;
-
-}
-
+/* ===================================================
+   RESPONSIVE — HP KECIL
+=================================================== */
+@media (max-width: 480px){
+  .logo{
+    font-size: 22px;
+  }
+
+  .hero h1{
+    font-size: 28px;
+  }
+
+  .hero p{
+    font-size: 15px;
+  }
+
+  .btn{
+    padding: 12px 25px;
+  }
+
+  .content h2{
+    font-size: 24px;
+  }
 }
